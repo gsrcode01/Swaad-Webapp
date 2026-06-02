@@ -1,0 +1,1 @@
+this is for all the econstant item to store and for hard coded things 

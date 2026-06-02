@@ -1,0 +1,126 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  background-color: beige;
+  border-radius: 10px;
+  padding: 10px;
+}
+.logo {
+  width: 100px;
+}
+.logo-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.nav-items {
+  padding: 0px 20px;
+}
+.nav-items > ul {
+  font-size: 20px;
+  display: flex;
+  list-style-type: none;
+}
+
+.nav-items > ul > li {
+  margin: 10px;
+  padding: 5px;
+}
+.res-card {
+  border-style: none;
+  width: 200px;
+  min-height: 320px;
+  text-align: center;
+  border-radius: 15px;
+  padding: 10px;
+  background-color: beige;
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+}
+.res-card:hover {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  transform: scale(1.05);  
+  transition: transform 0.3s ease;
+}
+.search {
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+#menu_search {
+  padding: 0 10px;
+  width: 90%;
+  height: 30px;
+  font-size: 20px;
+  border-radius: 22px;
+  border:1px solid black;
+}
+#btn {
+  width: 110px;
+  border-radius: 20px;
+  background-color: beige;
+  border-style: none;
+}
+#btn:hover {
+  background-color: burlywood;
+  transition: all 0.3s ease;
+}
+
+#res-img {
+  margin-top: 20%;
+  width: 150px;
+}
+
+.res-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px;
+}
+.nav-items > ul {
+  font-size: 16px;
+  padding-left: 0;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+#res-img {
+  width: 200px;
+  border-radius: 35px;
+}
+
+.restaurants {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  
+}
+.shimmer-card{
+  border-style: none;
+  width: 200px;
+  min-height: 320px;
+  text-align: center;
+  border-radius: 15px;
+  padding: 10px; 
+  background-color: beige;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+li{
+  font-size: 20px;
+  cursor: pointer;
+}
+
+#lg{
+  width: 100px;
+  height:30px;
+  font-size: 16px;
+  border-style: none;
+  background-color: rgb(247, 247, 235);
+  border: 1px solid black;
+  border-radius: 10px;
+
+}
