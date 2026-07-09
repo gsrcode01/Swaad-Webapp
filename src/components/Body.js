@@ -1,35 +1,48 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ResObj from "../utils/mockdata";
 import RestaurantCard from "./RestaurantCard";
 import Shimmer from "./shimmer";
+import { Link } from "react-router-dom";
 const Body = () => {
-  const [listOfRestaurant, setListOfRestaurant] = React.useState([]);
-  const [searchText, setSearchText] = React.useState("");
+  const [listOfRestaurant, setListOfRestaurant] = useState([]);
+  const [searchText, setSearchText] = useState("");
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = async () => {
-    const data = await fetch(
-      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9351929&lng=77.62448069999999&page_type=DESKTOP_WEB_LISTING",
-    );
+    try {
+      const data = await fetch(
+        "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9351929&lng=77.62448069999999&page_type=DESKTOP_WEB_LISTING"
+      );
 
-    const json = await data.json();
-    console.log(json);
-
-    let restaurants = [];
-
-    json?.data?.cards?.forEach((card) => {
-      const res = card?.card?.card?.gridElements?.infoWithStyle?.restaurants;
-
-      if (res) {
-        restaurants = [...restaurants, ...res]; 
+      if (!data.ok) {
+        throw new Error(`API returned status ${data.status}`);
       }
-    });
 
-    console.log("Total restaurants:", restaurants.length);
+      const json = await data.json();
+      console.log(json);
 
-    setListOfRestaurant(restaurants);
+      let restaurants = [];
+
+      json?.data?.cards?.forEach((card) => {
+        const res = card?.card?.card?.gridElements?.infoWithStyle?.restaurants;
+
+        if (res) {
+          restaurants = [...restaurants, ...res];
+        }
+      });
+
+      if (restaurants.length === 0) {
+        throw new Error("No restaurants returned from API");
+      }
+
+      console.log("Total restaurants:", restaurants.length);
+      setListOfRestaurant(restaurants);
+    } catch (error) {
+      console.warn("Fetch failed, loading mock restaurant data:", error);
+      setListOfRestaurant(ResObj);
+    }
   };
   return (
     <div className="body">
@@ -68,10 +81,13 @@ const Body = () => {
           <Shimmer />
         ) : (
           listOfRestaurant.map((restaurant, index) => (
-            <RestaurantCard
+            <Link
               key={restaurant.info.id + "-" + index}
-              ResData={restaurant}
-            />
+              to={"/restaurants/" + restaurant.info.id}
+              className="res-card-link"
+            >
+              <RestaurantCard ResData={restaurant} />
+            </Link>
           ))
         )}
       </div>
