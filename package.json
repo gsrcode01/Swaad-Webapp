@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "this is my first react project",
   "scripts": {
-    "start": "parcel index.html --port 1235 --open",
+    "start": "parcel index.html --open",
     "backend": "node backend/server.js",
     "dev": "concurrently \"npm run backend\" \"npm run start\"",
     "test": "jest"
