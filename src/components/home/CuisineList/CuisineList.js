@@ -37,7 +37,7 @@ const CuisineList = ({ selectedCuisine, onSelectCuisine }) => {
   return (
     <section className="select-none">
       {/* Section Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4 sm:mb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3 sm:mb-4">
         <div>
           <h3 className="text-2xl sm:text-3xl font-headline text-[#172B4D]">Popular Cuisines</h3>
           <p className="text-xs sm:text-sm text-[#667085] font-body mt-1">Explore meals by your favorite category</p>
@@ -53,8 +53,8 @@ const CuisineList = ({ selectedCuisine, onSelectCuisine }) => {
         )}
       </div>
 
-      {/* Cuisines Card Row */}
-      <div className="flex items-center gap-4 sm:gap-6 overflow-x-auto pb-2 scrollbar-none pt-1">
+      {/* Cuisines Card Row with top padding to prevent hover overlap */}
+      <div className="flex items-center gap-4 sm:gap-6 overflow-x-auto pb-3 scrollbar-none pt-3.5 px-1 -mx-1">
         {cuisines.map((cuisine) => {
           const isSelected = selectedCuisine === cuisine.name;
           return (
