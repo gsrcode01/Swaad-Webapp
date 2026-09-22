@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "description": "this is my first react project",
   "scripts": {
-    "start": "parcel index.html --open",
-    "dev": "parcel index.html --open",
+    "backend": "node server.js",
+    "frontend": "parcel index.html --no-cache",
+    "start": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
     "build": "parcel build index.html",
     "test": "jest"
   },
@@ -12,12 +14,15 @@
   "license": "ISC",
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.3",
+    "concurrently": "^9.1.2",
     "jest": "^30.2.0",
     "parcel": "^2.16.4",
     "tailwindcss": "^4.3.3"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.12.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-redux": "^9.3.0",

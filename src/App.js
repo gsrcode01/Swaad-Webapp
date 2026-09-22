@@ -1,74 +1,40 @@
 import React, { lazy, Suspense, useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Provider } from "react-redux";
 import appStore from "./store/appStore";
 import UserContext from "./context/UserContext";
 
-import Header from "./components/Header/Header";
-import Body from "./pages/Body/Body";
-import ContactUs from "./pages/ContactUs/ContactUs";
-import Error from "./pages/Error/Error";
+import AppShell from "./components/layout/AppShell/AppShell";
+import Home from "./pages/Home/Home";
 import RestaurantMenu from "./pages/RestaurantMenu/RestaurantMenu";
 import Cart from "./pages/Cart/Cart";
+import Checkout from "./pages/Checkout/Checkout";
+import Orders from "./pages/Orders/Orders";
+import OrderTracking from "./pages/OrderTracking/OrderTracking";
+import Offers from "./pages/Offers/Offers";
+import ContactUs from "./pages/ContactUs/ContactUs";
+import Profile from "./pages/Profile/Profile";
+import Error from "./pages/Error/Error";
 import "./style.css";
 
-// Chunking / Code Splitting / Lazy Loading
+// Lazy Loaded Routes
 const Grocery = lazy(() => import("./pages/Grocery/Grocery"));
 const About = lazy(() => import("./pages/About/About"));
-
-const AppLayout = () => {
-  const [userName, setUserName] = useState();
-
-  // authentication
-  useEffect(() => {
-    // Make an API call and send username and password
-    const data = {
-      name: "Akshay Saini",
-    };
-    setUserName(data.name);
-  }, []);
-
-  return (
-    <Provider store={appStore}>
-      <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
-        <div className="app">
-          <Header />
-          <Outlet />
-        </div>
-      </UserContext.Provider>
-    </Provider>
-  );
-};
 
 const appRouter = createBrowserRouter([
   {
     path: "/",
-    element: <AppLayout />,
+    element: <AppShell />,
+    errorElement: <Error />,
     children: [
       {
         path: "/",
-        element: <Body />,
+        element: <Home />,
       },
       {
-        path: "/about",
-        element: (
-          <Suspense fallback={<h1>Loading....</h1>}>
-            <About />
-          </Suspense>
-        ),
-      },
-      {
-        path: "/contact",
-        element: <ContactUs />,
-      },
-      {
-        path: "/grocery",
-        element: (
-          <Suspense fallback={<h1>Loading....</h1>}>
-            <Grocery />
-          </Suspense>
-        ),
+        path: "/restaurants",
+        element: <Home scrollToRestaurants={true} />,
       },
       {
         path: "/restaurants/:resId",
@@ -78,11 +44,67 @@ const appRouter = createBrowserRouter([
         path: "/cart",
         element: <Cart />,
       },
+      {
+        path: "/checkout",
+        element: <Checkout />,
+      },
+      {
+        path: "/orders",
+        element: <Orders />,
+      },
+      {
+        path: "/track/:orderId",
+        element: <OrderTracking />,
+      },
+      {
+        path: "/offers",
+        element: <Offers />,
+      },
+      {
+        path: "/grocery",
+        element: (
+          <Suspense fallback={<div className="p-12 text-center text-sm font-subhead text-[#667085]">Loading Grocery Mart...</div>}>
+            <Grocery />
+          </Suspense>
+        ),
+      },
+      {
+        path: "/about",
+        element: (
+          <Suspense fallback={<div className="p-12 text-center text-sm font-subhead text-[#667085]">Loading About...</div>}>
+            <About />
+          </Suspense>
+        ),
+      },
+      {
+        path: "/contact",
+        element: <ContactUs />,
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
+      },
     ],
-    errorElement: <Error />,
   },
 ]);
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const App = () => {
+  const [userName, setUserName] = useState("Girdhar");
 
-root.render(<RouterProvider router={appRouter} />);
+  useEffect(() => {
+    // Simulated Authentication
+    const data = { name: "Girdhar" };
+    setUserName(data.name);
+  }, []);
+
+  return (
+    <Provider store={appStore}>
+      <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
+        <RouterProvider router={appRouter} />
+      </UserContext.Provider>
+    </Provider>
+  );
+};
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App />);
